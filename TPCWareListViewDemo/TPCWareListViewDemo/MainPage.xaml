@@ -2,13 +2,26 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:TPCWareListViewDemo"
-             x:Class="TPCWareListViewDemo.MainPage">
+             x:Class="TPCWareListViewDemo.MainPage"
+             x:Name="xMainPage">
 
     <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+
+        <Button Text="Seleziona il primo elemento" Clicked="FirstElementButton_Clicked"/>
+
+        <Button Text="Seleziona la data 24/01/2019" Clicked="FindDateButton_Clicked"/>
+
+        <ListView x:Name="MyListView" ItemsSource="{Binding Path=MyItemList, Source={x:Reference xMainPage}}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Data, StringFormat='{0:d}'}"
+                              TextColor="Black"
+                              Detail="{Binding Descrizione}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
     </StackLayout>
+    
 
 </ContentPage>
