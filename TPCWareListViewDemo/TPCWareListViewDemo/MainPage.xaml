@@ -1,9 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:TPCWareListViewDemo"
+             xmlns:vm="clr-namespace:TPCWareListViewDemo.ViewModel"
              x:Class="TPCWareListViewDemo.MainPage"
              x:Name="xMainPage">
+
+    <ContentPage.BindingContext>
+        <vm:MainViewModel />
+    </ContentPage.BindingContext>
 
     <StackLayout>
 
@@ -11,7 +15,7 @@
 
         <Button Text="Seleziona la data 24/01/2019" Clicked="FindDateButton_Clicked"/>
 
-        <ListView x:Name="MyListView" ItemsSource="{Binding Path=MyItemList, Source={x:Reference xMainPage}}">
+        <ListView x:Name="MyListView" ItemsSource="{Binding Path=MyItemList}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding Data, StringFormat='{0:d}'}"

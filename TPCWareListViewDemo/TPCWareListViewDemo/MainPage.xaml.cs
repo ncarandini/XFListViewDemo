@@ -4,24 +4,33 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPCWareListViewDemo.ViewModel;
 using Xamarin.Forms;
 
 namespace TPCWareListViewDemo
 {
     public partial class MainPage : ContentPage
     {
-        public ObservableCollection<Appuntamento> MyItemList { get; set; } = new ObservableCollection<Appuntamento>();
+        // Predisponiamo una variabile per referenziare il viewmodel
+        private MainViewModel vm;
 
         public MainPage()
         {
             InitializeComponent();
-            InitializeList();
+
+            // prendiamo il riferimento al viewmodel dalla proprietà "BindingContext" della view
+            // (che abbiamo impostato in XAML) facendone il cast al nostro tipo di viewmodel
+            // perché la proprietà "BindingContext" è di tipo object.
+            vm = BindingContext as MainViewModel;
         }
+
+        // I puristi del MVVM qui storcono certamente il naso, perché andrebbe utilizzato ICommand per spostare tutta la logica nel viewmodel
+        // e io sono d'accordo perché rende tutto testabile con gli unit test. Questa però è solo una demo, quindi per semplicità lascio qui il codice.
 
         private void FirstElementButton_Clicked(object sender, EventArgs e)
         {
             // seleziona il primo elemento nella lista
-            var item = MyItemList.FirstOrDefault();
+            var item = vm.MyItemList.FirstOrDefault();
             MyListView.SelectedItem = item;
             MyListView.ScrollTo(item, ScrollToPosition.Center, animated: true);
         }
@@ -31,80 +40,12 @@ namespace TPCWareListViewDemo
             DateTime findDateTime = new DateTime(2019, 01, 24);
 
             // Cerca il primo elemento con la data desiderata
-            var item = MyItemList.Where(ap => ap.Data == findDateTime).FirstOrDefault();
+            var item = vm.MyItemList.Where(ap => ap.Data == findDateTime).FirstOrDefault();
 
             // seleziona l'elemento nella lista
             MyListView.SelectedItem = item;
             MyListView.ScrollTo(item, ScrollToPosition.Center, animated: true);
         }
 
-        private void InitializeList()
-        {
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 8),
-                Descrizione = "Cena di gala"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 10),
-                Descrizione = "Cinema"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 12),
-                Descrizione = "Pizza"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 13),
-                Descrizione = "Xbox One con gli amici"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 14),
-                Descrizione = "Tennis"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 17),
-                Descrizione = "Teatro"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 18),
-                Descrizione = "Mostra fotografica"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 19),
-                Descrizione = "Pizza"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 20),
-                Descrizione = "Cena con gli amici"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 22),
-                Descrizione = "Cena di lavoro"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 23),
-                Descrizione = "Preparare le slide"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 24),
-                Descrizione = "Partita di calcetto"
-            });
-            MyItemList.Add(new Appuntamento
-            {
-                Data = new DateTime(2019, 01, 29),
-                Descrizione = "Meetup"
-            });
-        }
     }
 }

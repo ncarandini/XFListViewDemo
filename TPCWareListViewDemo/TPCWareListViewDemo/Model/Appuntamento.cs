@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TPCWareListViewDemo
+namespace TPCWareListViewDemo.Model
 {
     public class Appuntamento
     {
